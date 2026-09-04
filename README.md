@@ -4,6 +4,17 @@ ERP modular bergaya SAP (10 modul inti) dengan UI **AdminLTE 4** (terbaru),
 backend **Node.js/Express**, database **MySQL 8+**, dan **fitur user level**
 (role-based access): `user → manager → admin → superadmin`.
 
+## Tampilan Aplikasi (Screenshot)
+
+| Halaman Login | Dashboard Admin |
+|---------------|------------------|
+| ![Login](docs/screenshots/login.png) | ![Dashboard](docs/screenshots/dashboard.png) |
+
+> Screenshot dirender real via headless Chromium dari `docs/preview-login.html` dan
+> `docs/preview-dashboard.html` (HTML statis AdminLTE 4 dengan data contoh).
+
+---
+
 ## Fitur Utama
 
 - **Login form** AdminLTE 4 (HTML5 validation, show/hide password, alert error)
