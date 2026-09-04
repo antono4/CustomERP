@@ -6,12 +6,12 @@ backend **Node.js/Express**, database **MySQL 8+**, dan **fitur user level**
 
 ## Tampilan Aplikasi (Screenshot)
 
-| Halaman Login | Dashboard Admin |
-|---------------|------------------|
-| ![Login](docs/screenshots/login.png) | ![Dashboard](docs/screenshots/dashboard.png) |
+| Halaman Login | Dashboard Admin | Manajemen User |
+|---------------|------------------|---------------------|
+| ![Login](docs/screenshots/login.png) | ![Dashboard](docs/screenshots/dashboard.png) | ![Manajemen User](docs/screenshots/users.png) |
 
-> Screenshot dirender real via headless Chromium dari `docs/preview-login.html` dan
-> `docs/preview-dashboard.html` (HTML statis AdminLTE 4 dengan data contoh).
+> Screenshot dirender real via headless Chromium dari file preview statis AdminLTE 4
+> dengan data contoh: `docs/preview-login.html`, `docs/preview-dashboard.html`, `docs/preview-users.html`.
 
 ---
 
@@ -181,6 +181,28 @@ goods_issues (delivery_id UNIQUE → 1 Delivery =max 1 GI)
 ```
 
 **GET**: `GET /api/mm/goods-receipts/:id` (header + item + stock ledger + jurnal\).
+
+---
+
+## API Backend: Manajemen User (Modul User)
+
+**Base URL**: `/api/users` — auth: `requireAuth` + `requireAdmin` (level >=3).
+
+| Method | Endpoint | Deskripsi |
+|--------|----------|-----------|
+| GET | `/api/users` | Daftar user (filter: `?q=`, `?role=`, `?status=`) |
+| GET | `/api/users/roles` | Referensi role & level |
+| POST | `/api/users` | Buat user baru (bcrypt hash; hanya role <= level anda) |
+| PATCH | `/api/users/:id` | Update profil / ganti password |
+| PATCH | `/api/users/:id/toggle` | Aktif / nonaktifkan user |
+| DELETE | `/api/users/:id` | Nonaktifkan (soft delete) |
+
+**Aturan keamanan level**:
+- User hanya bisa membuat/mengubah role dengan **level lebih rendah atau sama** dengan level-nya.
+- Tidak bisa menonaktifkan / menghapus **akun sendiri**.
+- Password selalu di-hash `bcrypt` (cost 12)).
+
+**Halaman UI**: `GET /admin/users` — AdminLTE 4 interaktif: tabel user, pencarian, filter role/status, stat cards (total/aktif/nonaktif/role), modal tambah/edit, toggle status, soft delete, toast notifikasi.
 
 ---
 

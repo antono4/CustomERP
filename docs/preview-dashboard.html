@@ -4,11 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Nexus ERP — Preview Dashboard (Admin)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@4.0.0/dist/css/adminlte.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.4.6/styles/overlayscrollbars.min.css">
+  <link rel="stylesheet" href="../public/assets/ui.css">
   <style>
-    body { font-family: 'Source Sans 3', sans-serif; }
+    body { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
     .content-wrapper { background:#f4f6f9; }
     .brand-link { text-decoration: none; }
     .small-box { border-radius: .8rem; overflow:hidden; }
@@ -63,11 +67,11 @@
       </ul>
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
-          <div class="user-card py-1 px-2 d-flex align-items-center gap-2">
-            <img src="https://cdn.jsdelivr.net/npm/admin-lte@4.0.0/dist/img/user2-160x160.jpg" class="user-avatar">
-            <div>
+          <div class="user-chip py-0">
+            <img src="https://cdn.jsdelivr.net/npm/admin-lte@4.0.0/dist/img/user2-160x160.jpg" class="avatar rounded-circle">
+            <div class="chip-meta">
               <div style="font-weight:600;font-size:.9rem">Administrator ERP</div>
-              <span class="badge text-bg-danger">Admin (Lv.3)</span>
+              <span class="badge text-bg-danger badge-role">Admin (Lv.3)</span>
             </div>
           </div>
         </li>
@@ -118,6 +122,27 @@
                 <div class="inner"><h3>2026</h3><p>Tahun Buku</p></div>
                 <div class="icon"><i class="fas fa-calendar-days"></i></div>
                 <a href="#" class="small-box-footer">Periode saat ini <i class="fas fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Module tiles (premium) -->
+          <div class="card mt-4 border-0 shadow-sm">
+            <div class="card-header"><h3 class="card-title"><i class="fas fa-th-large me-2 text-primary"></i> Modul yang dapat diakses</h3>
+              <div class="card-tools"><span class="badge text-bg-primary badge-role">10 modul aktif</span></div>
+            </div>
+            <div class="card-body">
+              <div class="row g-3">
+                <div class="col-md-6 col-lg-3"><a href="#" class="text-decoration-none"><div class="module-tile p-3 h-100"><span class="tile-badge"><span class="badge text-bg-light border badge-role">FI-CO</span></span><div class="d-flex align-items-center gap-3"><div class="tile-icon"><i class="fas fa-scale-balanced"></i></div><div><p class="tile-code mb-0">Modul 01</p><h6 class="tile-name">Finance &amp; Controlling</h6></div></div><div class="mt-3 small text-secondary d-flex align-items-center gap-1"><i class="fas fa-circle-check text-success"></i> Aktif</div></div></a></div>
+                <div class="col-md-6 col-lg-3"><a href="#" class="text-decoration-none"><div class="module-tile p-3 h-100"><span class="tile-badge"><span class="badge text-bg-light border badge-role">SD</span></span><div class="d-flex align-items-center gap-3"><div class="tile-icon"><i class="fas fa-cart-shopping"></i></div><div><p class="tile-code mb-0">Modul 02</p><h6 class="tile-name">Sales &amp; Distribution</h6></div></div><div class="mt-3 small text-secondary d-flex align-items-center gap-1"><i class="fas fa-circle-check text-success"></i> Aktif</div></div></a></div>
+                <div class="col-md-6 col-lg-3"><a href="#" class="text-decoration-none"><div class="module-tile p-3 h-100"><span class="tile-badge"><span class="badge text-bg-light border badge-role">MM</span></span><div class="d-flex align-items-center gap-3"><div class="tile-icon"><i class="fas fa-boxes-stacked"></i></div><div><p class="tile-code mb-0">Modul 03</p><h6 class="tile-name">Material Management</h6></div></div><div class="mt-3 small text-secondary d-flex align-items-center gap-1"><i class="fas fa-circle-check text-success"></i> Aktif</div></div></a></div>
+                <div class="col-md-6 col-lg-3"><a href="#" class="text-decoration-none"><div class="module-tile p-3 h-100"><span class="tile-badge"><span class="badge text-bg-light border badge-role">PP</span></span><div class="d-flex align-items-center gap-3"><div class="tile-icon"><i class="fas fa-industry"></i></div><div><p class="tile-code mb-0">Modul 04</p><h6 class="tile-name">Production Planning</h6></div></div><div class="mt-3 small text-secondary d-flex align-items-center gap-1"><i class="fas fa-circle-check text-success"></i> Aktif</div></div></a></div>
+                <div class="col-md-6 col-lg-3"><a href="#" class="text-decoration-none"><div class="module-tile p-3 h-100"><span class="tile-badge"><span class="badge text-bg-light border badge-role">WM</span></span><div class="d-flex align-items-center gap-3"><div class="tile-icon"><i class="fas fa-warehouse"></i></div><div><p class="tile-code mb-0">Modul 05</p><h6 class="tile-name">Warehouse Management</h6></div></div><div class="mt-3 small text-secondary d-flex align-items-center gap-1"><i class="fas fa-circle-check text-success"></i> Aktif</div></div></a></div>
+                <div class="col-md-6 col-lg-3"><a href="#" class="text-decoration-none"><div class="module-tile p-3 h-100"><span class="tile-badge"><span class="badge text-bg-light border badge-role">HCM</span></span><div class="d-flex align-items-center gap-3"><div class="tile-icon"><i class="fas fa-users"></i></div><div><p class="tile-code mb-0">Modul 06</p><h6 class="tile-name">Human Capital</h6></div></div><div class="mt-3 small text-secondary d-flex align-items-center gap-1"><i class="fas fa-circle-check text-success"></i> Aktif</div></div></a></div>
+                <div class="col-md-6 col-lg-3"><a href="#" class="text-decoration-none"><div class="module-tile p-3 h-100"><span class="tile-badge"><span class="badge text-bg-light border badge-role">SCM</span></span><div class="d-flex align-items-center gap-3"><div class="tile-icon"><i class="fas fa-truck-fast"></i></div><div><p class="tile-code mb-0">Modul 07</p><h6 class="tile-name">Supply Chain Mgmt</h6></div></div><div class="mt-3 small text-secondary d-flex align-items-center gap-1"><i class="fas fa-circle-check text-success"></i> Aktif</div></div></a></div>
+                <div class="col-md-6 col-lg-3"><a href="#" class="text-decoration-none"><div class="module-tile p-3 h-100"><span class="tile-badge"><span class="badge text-bg-light border badge-role">PS</span></span><div class="d-flex align-items-center gap-3"><div class="tile-icon"><i class="fas fa-diagram-project"></i></div><div><p class="tile-code mb-0">Modul 08</p><h6 class="tile-name">Project System</h6></div></div><div class="mt-3 small text-secondary d-flex align-items-center gap-1"><i class="fas fa-circle-check text-success"></i> Aktif</div></div></a></div>
+                <div class="col-md-6 col-lg-3"><a href="#" class="text-decoration-none"><div class="module-tile p-3 h-100"><span class="tile-badge"><span class="badge text-bg-light border badge-role">CRM</span></span><div class="d-flex align-items-center gap-3"><div class="tile-icon"><i class="fas fa-handshake"></i></div><div><p class="tile-code mb-0">Modul 09</p><h6 class="tile-name">Customer Relationship</h6></div></div><div class="mt-3 small text-secondary d-flex align-items-center gap-1"><i class="fas fa-circle-check text-success"></i> Aktif</div></div></a></div>
+                <div class="col-md-6 col-lg-3"><a href="#" class="text-decoration-none"><div class="module-tile p-3 h-100"><span class="tile-badge"><span class="badge text-bg-light border badge-role">PM</span></span><div class="d-flex align-items-center gap-3"><div class="tile-icon"><i class="fas fa-screwdriver-wrench"></i></div><div><p class="tile-code mb-0">Modul 10</p><h6 class="tile-name">Plant Maintenance</h6></div></div><div class="mt-3 small text-secondary d-flex align-items-center gap-1"><i class="fas fa-circle-check text-success"></i> Aktif</div></div></a></div>
               </div>
             </div>
           </div>

@@ -4,98 +4,129 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Login — Nexus ERP</title>
-  <!-- AdminLTE 4 (terbaru) + Bootstrap 5.3 + Font Awesome 6 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@4.0.0/dist/css/adminlte.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
   <style>
-    body { background: linear-gradient(135deg, #0d6efd 0%, #0dcaf0 100%); min-height:  `100vh`; }
+    :root { --brand-1:#2563eb; --brand-2:#0ea5e9; --ink:#0f172a; --line:#e2e8f0; }
+    * { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
+    body.auth-page { margin:0; min-height:100vh; display:flex;
+      background:#0f172a;
+      background-image: radial-gradient(ellipse at 20% 20%, rgba(37,99,235,.45) 0%, transparent 55%),
+                        radial-gradient(ellipse at 90% 10%, rgba(14,165,233,.35) 0%, transparent 50%),
+                        radial-gradient(ellipse at  ͵70% 90%, rgba(99,102,241,.25) 0%, transparent  ͵55%);
+      color:#fff; }
+    .auth-shell { display:flex; width:100%; max-width:1180px; margin:auto; gap:48px; align-items:center; padding:32px; }
+    .auth-brand { flex:1 1 55%; }
+    .brand-logo { width:56px; height:56px; border-radius:16px; object-fit:cover; box-shadow:0 10px 30px rgba(37,99,235,.4); }
+    .auth-brand h1 { font-size:clamp(2rem,4vw,3rem); font-weight:800; letter-spacing:-.02em; line-height:1.15; margin:.9rem 0 .75rem; }
+    .auth-brand h1 .grad { background:linear-gradient(90deg,#60a5fa,#22d3ee); -webkit-background-clip:text; background-clip:text; color:transparent; }
+    .auth-brand .tagline { color:#94a3b8; font-size:1.05rem; max-width:36ch; margin-bottom:2rem; }
+    .feature { display:flex; gap:14px; align-items:flex-start; padding:.9rem 0; border-bottom:1px solid rgba(255,255,255,.07); }
+    .feature:last-child { border-bottom:0; }
+    .feature .ico { width:40px; height:40px; border-radius:12px; background:rgba(255,255,255,.08); display:grid; place-items:center; font-size:1rem; color:#7dd3fc; flex-shrink:0; }
+    .feature b { font-size:.98rem; font-weight:700; }
+    .feature p { margin:2px 0 0; color:#94a3b8; font-size:.85rem; }
+    .auth-card { flex:0 0 400px; background:#fff; border-radius:24px; padding:36px 34px; color:var(--ink); box-shadow:0 25px 60px rgba(2,6,23,.5); }
+    .auth-card .kicker { color:var(--brand-1); font-weight:700; font-size:.75rem; text-transform:uppercase; letter-spacing:.12em; }
+    .auth-card h2 { font-weight:800; font-size:1.5rem; margin:.3rem 0 1.4rem; letter-spacing:-.01em; }
+    .field { margin-bottom:1rem; }
+    .field label { font-size:.8rem; font-weight:600; color:#334155; display:block; margin-bottom:.4rem; }
+    .input-wrap { position:relative; }
+    .input-wrap > i { position:absolute; left:14px; top:50%; transform:translateY(-50%); color:#94a3b8; font-size:.95rem; }
+    .input-wrap input { width:100%; padding:.8rem 2.6rem; border:1.5px solid var(--line); border-radius:12px; font-size:.95rem; outline:none; transition:border-color .15s, box-shadow .15s; background:#f8fafc; }
+    .input-wrap input:focus { border-color:var(--brand-1); box-shadow:0 0 0 4px rgba(37,99,235,.12%; background:#fff; }
+    .input-wrap .toggle { position:absolute; right:10px; top:50%; transform:translateY(-50%); border:0; background:none; color:#94a3b8; padding:.4rem .6rem; border-radius:8px; cursor:pointer; }
+    .row-between { display:flex; align-items:center; justify-content:space-between; margin:.9rem 0 1.2rem; }
+    .chk { display:flex; align-items:center; gap:.45rem; font-size:.85rem; color:#475569; cursor:pointer; }
+    .chk input { accent-color:var(--brand-1); width:16px; height:16px; }
+    .link-sm { font-size:.85rem; color:var(--brand-1); text-decoration:none; font-weight:600; }
+    .link-sm:hover { text-decoration:underline; }
+    .btn-login { width:100%; border:0; border-radius:12px; padding:.85rem; font-weight:700; font-size:.98rem; color:#fff; background:linear-gradient(135deg,#2563eb,#0ea5e9); box-shadow:0 12px 24px rgba(37,99,235,.35); cursor:pointer; transition:transform .12s, box-shadow .12s; }
+    .btn-login:hover { transform:translateY(-1px); box-shadow:0 16px 30px rgba(37,99,235,.45); }
+    .btn-login:active { transform:translateY(0); }
+    .divider { display:flex; align-items:center; gap:12px; color:#94a3b8; font-size:.78rem; margin:1.2rem 0; }
+    .divider::before,.divider::after { content:''; flex:1; height:1px; background:var(--line); }
+    .demo-note { background:#f1f5ff; border:1px solid #dbe6ff; border-radius:12px; padding:.7rem .9rem; font-size:.8rem; color:#334155; display:flex; gap:.55rem; align-items:flex-start; }
+    .demo-note i { color:var(--brand-1); margin-top:2px; }
+    .demo-note code { background:#fff; border:1px solid #dbe6ff; border-radius:6px; padding:0 .35rem; font-size:.78rem; color:#2563eb; }
+    .auth-card footer { text-align:center; margin-top:1.1rem; font-size:.75rem; color:#94a3b8; }
+    @media (max-width:920px) { .auth-brand { display:none; } .auth-shell { justify-content:center; } }
   </style>
 </head>
-<body class="login-page bg-body-secondary">
-  <div class="login-box" style="max-width:420px">
-    <div class="card card-outline card-primary shadow-lg rounded-4">
-      <div class="card-header text-center border-0 pt-4">
-        <div class="brand-link d-flex flex-column align-items-center">
-          <img src="https://cdn.jsdelivr.net/npm/admin-lte@4.0.0/dist/img/AdminLTELogo.png"
-               alt="Nexus ERP" class="brand-image" style="width:64px;height:64px;border-radius:50%;box-shadow:0 4px 12px rgba(0,0,0,.2%">
-          <h1 class="h3 fw-bold mt-3 mb-0">Nexus <span class="text-primary">ERP</span></h1>
-          <p class="text-muted small mb-0">Enterprise Resource Planning System</p>
+<body class="auth-page">
+  <div class="auth-shell">
+    <div class="auth-brand">
+      <img src="https://cdn.jsdelivr.net/npm/admin-lte@4.0.0/dist/img/AdminLTELogo.png" alt="Nexus ERP" class="brand-logo">
+      <h1>Platform ERP<br><span class="grad">Enterprise Indonesia</span></h1>
+      <p class="tagline">Satu sumber data untuk Finance, Sales, Inventory, Produksi, HCM, Project, hingga Maintenance.</p>
+      <div class="feature"><div class="ico"><i class="fas fa-scale-balanced"></i></div><div><b>10 Modul Inti</b><p>FI/CO, SD, MM, PP, WM/EWM, HCM/HR, SCM/APO, PS, CRM, PM.</p></div></div>
+      <div class="feature"><div class="ico"><i class="fas fa-link"></i></div><div><b>Transaksi Otomatis Lintas Modul</b><p>Goods Issue mengurangi stok sekaligus memposting jurnal GL secara real-time.</p></div></div>
+      <div class="feature"><div class="ico"><i class="fas fa-shield-halved"></i></div><div><b>Keamanan Berlapis</b><p>Login session terenkripsi, hak akses per-role hingga level modul.</p></div></div>
+    </div>
+
+    <div class="auth-card">
+      <div class="kicker">Selamat datang kembali</div>
+      <h2>Masuk ke akun Anda</h2>
+      <div id="alertBox"></div>
+      <form id="loginForm" method="POST" action="/login" novalidate>
+        <div class="field">
+          <label for="username">Username</label>
+          <div class="input-wrap">
+            <i class="fas fa-user"></i>
+            <input type="text" id="username" name="username" placeholder="Masukkan username" required minlength="3" autofocus autocomplete="username">
+          </div>
         </div>
-      </div>
-      <div class="card-body login-card-body p-4">
-        <!-- Alert error dari query string (: error\) -->
-        <div id="alertBox"></div>
-        <form id="loginForm" method="POST" action="/login" novalidate>
-          <div class="input-group mb-3">
-            <span class="input-group-text"><i class="fas fa-user"></i></span>
-            <input type="text" class="form-control" id="username" name="username"
-                   placeholder="Username" required minlength="3" autofocus autocomplete="username">
+        <div class="field">
+          <label for="password">Password</label>
+          <div class="input-wrap">
+            <i class="fas fa-lock"></i>
+            <input type="password" id="password" name="password" placeholder="Masukkan password" required minlength="6" autocomplete="current-password">
+            <button type="button" class="toggle" id="togglePassword" tabindex="-1" aria-label="Tampilkan password"><i class="fas fa-eye" id="eyeIcon"></i></button>
           </div>
-          <div class="input-group mb-3">
-            <span class="input-group-text"><i class="fas fa-lock"></i></span>
-            <input type="password" class="form-control" id="password" name="password"
-                   placeholder="Password" required minlength="6" autocomplete="current-password">
-            <button type="button" class="btn btn-outline-secondary" id="togglePassword" tabindex="-1">
-              <i class="fas fa-eye" id="eyeIcon"></i>
-            </button>
-          </div>
-          <div class="row">
-            <div class="col-8">
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="remember">
-                <label class="form-check-label" for="remember">Ingat saya</label>
-              </div>
-            </div>
-            <div class="col-4 text-end">
-              <button type="submit" class="btn btn-primary btn-block w-100" id="btnLogin">
-                <i class="fas fa-sign-in-alt me-1"></i> Masuk
-              </button>
-            </div>
-          </div>
-        </form>
-        <p class="mt-3 mb-1 text-muted small text-center">
-          Default: <code>admin / password123</code> — ganti segera setelah login.
-        </p>
-      </div>
-      <div class="card-footer border-0 text-center pb-4">
-        <p class="small text-muted mb-0"><strong>Nexus ERP</strong> v1.0 — AdminLTE 4 &copy; 2026</p>
-      </div>
+        </div>
+        <div class="row-between">
+          <label class="chk"><input type="checkbox" id="remember"> Ingat saya</label>
+          <a href="#" class="link-sm">Lupa password?</a>
+        </div>
+        <button type="submit" class="btn-login" id="btnLogin"><i class="fas fa-right-to-bracket me-1"></i> Masuk ke Aplikasi</button>
+        <div class="divider">atau</div>
+        <div class="demo-note">
+          <i class="fas fa-circle-info"></i>
+          <div>Akun demo: <code>admin</code> / <code>password123</code><br><small>Ganti password setelah login pertama.</small></div>
+        </div>
+        <footer><strong>Nexus ERP</strong> v1.0 — &copy;2024-2026 &middot; AdminLTE 4</footer>
+      </form>
     </div>
   </div>
 
-  <!-- AdminLTE 4 JS + dependensi -->
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/admin-lte@4.0.0/dist/js/adminlte.min.js"></script>
   <script>
     const params = new URLSearchParams(window.location.search);
     if (params.get('error')) {
-      const alertBox = document.getElementById('alertBox');
-      alertBox.innerHTML = `
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-          <i class="fas fa-circle-exclamation me-2"></i> ${params.get('error')}
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>`;
+      document.getElementById('alertBox').innerHTML =
+        `<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-size:.85rem;border-radius:10px">
+           <i class="fas fa-circle-exclamation me-2"></i> ${params.get('error')}
+           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+         </div>`;
     }
-
-    // Validasi HTML5 front-end
     const form = document.getElementById('loginForm');
     form.addEventListener('submit', (e) => {
       const u = document.getElementById('username').value.trim();
       const p = document.getElementById('password').value;
       if (!u || p.length < 6) {
         e.preventDefault();
-        const alertBox = document.getElementById('alertBox');
-        alertBox.innerHTML = `
-          <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            <i class="fas fa-triangle-exclamation me-2"></i> Username wajib diisi dan password minimal 6 karakter.
-
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>`;
+        document.getElementById('alertBox').innerHTML =
+          `<div class="alert alert-warning alert-dismissible fade show" role="alert" style="font-size:.85rem;border-radius:10px">
+             <i class="fas fa-triangle-exclamation me-2"></i> Username wajib diisi dan password minimal 6 karakter.
+             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+           </div>`;
       }
     });
-
-    // Toggle tampil password
     const toggle = document.getElementById('togglePassword');
     const pwd = document.getElementById('password');
     const eye = document.getElementById('eyeIcon');

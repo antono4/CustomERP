@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="id" data-bs-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Manajemen User — Nexus ERP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@4.0.0/dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.4.6/styles/overlayscrollbars.min.css">
+  <link rel="stylesheet" href="/assets/ui.css">
+  <style>
+    .filter-bar { display:flex; gap:.75rem; flex-wrap:wrap; align-items:center; }
+    .filter-bar .form-control,.filter-bar .form-select { min-width:160px; width:auto; }
+    .avatar-sm { width:2rem; height:2rem; border-radius:50%; object-fit:cover; }
+    .role-badge { font-weight:700; font-size:.72rem; padding:.42em .75em; border-radius:.6em; }
+    .modal-content { border-radius:1rem; border:0; box-shadow:0 20px 50px rgba(15,,23,42,.25%; }
+    .toast-container { position:fixed; top:1rem; right:1rem; z-index:2000; }
+    .pwd-hint { font-size:.72rem; color:var(--nexus-muted); margin-top:.25rem; }
+    .table .btn-icon { width:2rem; height:2rem; padding:0; display:inline-grid; place-items:center; }
+    .empty-state { text-align:center; padding:3rem 1rem; color:var(--nexus-muted); }
+    .empty-state i { font-size:2.5rem; opacity:.4; }
+  </style>
+</head>
+<body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+  <div class="app-wrapper">
+
+    <!-- ==== Sidebar ==== -->
+    <aside class="app-sidebar bg-dark" data-bs-theme="dark">
+      <a href="/" class="brand-link">
+        <img src="https://cdn.jsdelivr.net/npm/admin-lte@4.0.0/dist/img/AdminLTELogo.png" alt="Nexus ERP" class="brand-image opacity-75 shadow">
+        <span class="brand-text fw-light">Nexus <b>ERP</b></span>
+      </a>
+      <div class="sidebar-wrapper">
+        <nav class="mt-2">
+          <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
+            <li class="nav-item"><a href="/" class="nav-link"><i class="nav-icon fas fa-gauge-high"></i><p>Dashboard</p></a></li>
+            <li class="nav-header">ADMINISTRASI</li>
+            <li class="nav-item"><a href="/admin/users" class="nav-link active"><i class="nav-icon fas fa-user-shield"></i><p>Manajemen User &amp; Level</p></a></li>
+            <li class="nav-item"><a href="/" class="nav-link"><i class="nav-icon fas fa-arrow-right-from-bracket"></i><p>Kembali ke Dashboard</p></a></li>
+          </ul>
+        </nav>
+      </div>
+    </aside>
+
+    <!-- ==== Header ==== -->
+    <header class="app-header navbar navbar-expand bg-body">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" data-lte-toggle="sidebar" href="#" role="button"><i class="fas fa-bars"></i></a></li>
+        <li class="nav-item d-none d-md-block"><a href="/" class="nav-link">Manajemen User</a></li>
+      </ul>
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a href="/" class="btn btn-outline-primary btn-sm me-2"><i class="fas fa-arrow-left me-1"></i> Dashboard</a></li>
+      </ul>
+    </header>
+
+    <!-- ==== Content ==== -->
+    <main class="app-main">
+      <div class="app-content-header">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm-6"><h3 class="mb-0"><i class="fas fa-user-shield text-primary me-2"></i> Manajemen User</h3></div>
+            <div class="col-sm-6 text-sm-end">
+              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#userModal" id="btnAddUser">
+                <i class="fas fa-plus me-1"></i> Tambah User
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="app-content">
+        <div class="container-fluid">
+          <div class="row g-3 mb-3">
+            <div class="col-6 col-lg-3"><div class="small-box text-bg-primary"><div class="inner"><h3 id="statTotal">-</h3><p>Total User</p></div><div class="icon"><i class="fas fa-users"></i></div></div></div>
+            <div class="col-6 col-lg-3"><div class="small-box text-bg-success"><div class="inner"><h3 id="statActive">-</h3><p>Aktif</p></div><div class="icon"><i class="fas fa-user-check"></i></div></div></div>
+            <div class="col-6 col-lg-3"><div class="small-box text-bg-secondary"><div class="inner"><h3 id="statInactive">-</h3><p>Nonaktif</p></div><div class="icon"><i class="fas fa-user-slash"></i></div></div></div>
+            <div class="col-6 col-lg-3"><div class="small-box text-bg-warning"><div class="inner"><h3 id="statRoles">-</h3><p>Role Level</p></div><div class="icon"><i class="fas fa-layer-group"></i></div></div></div>
+          </div>
+
+          <!-- ==== Tabel User ==== -->
+          <div class="card border-0 shadow-sm">
+            <div class="card-header d-flex flex-wrap gap-2 align-items-center">
+              <h3 class="card-title mb-0"><i class="fas fa-table-list me-2 text-primary"></i> Daftar User</h3>
+              <div class="card-tools filter-bar ms-auto">
+                <input type="search" class="form-control" id="fSearch" placeholder="Cari username / nama / email">
+                <select class="form-select" id="fRole"><option value="">Semua Role</option></select>
+                <select class="form-select" id="fStatus">
+                  <option value="">Semua Status</option><option value="1">Aktif</option><option value="0">Nonaktif</option>
+                </select>
+              </div>
+            </div>
+            <div class="card-body table-responsive p-0">
+              <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                  <tr><th>User</th><th>Role / Level</th><th>Kontak</th><th>Status</th><th>Login Terakhir</th><th class="text-end">Aksi</th></tr>
+                </thead>
+                <tbody id="userTableBody">
+                  <tr><td colspan="6" class="empty-state"><i class="fas fa-spinner fa-spin"></i><p class="mt-2 mb-0">Memuat data...</p></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="card-footer py-2"><small class="text-muted" id="footerInfo"></small></div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer class="app-footer">
+      <div class="float-end d-none d-sm-inline">AdminLTE 4</div>
+      <strong>Nexus ERP &copy; 2024-2026.</strong>
+    </footer>
+  </div>
+
+  <!-- ==== Modal Tambah / Edit User ==== -->
+  <div class="modal fade" id="userModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <form id="userForm">
+          <div class="modal-header">
+            <h5 class="modal-title" id="userModalTitle"><i class="fas fa-user-plus me-2 text-primary"></i> Tambah User</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" id="uId">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label" for="uUsername">Username <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="uUsername" required autocomplete="off">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="uFullName">Nama Lengkap <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="uFullName" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="uEmail">Email</label>
+                <input type="email" class="form-control" id="uEmail">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="uRole">Role / Level <span class="text-danger">*</span></label>
+                <select class="form-select" id="uRole" required></select>
+              </div>
+              <div class="col-12">
+                <label class="form-label" for="uPassword">Password</label>
+                <input type="password" class="form-control" id="uPassword" autocomplete="new-password" placeholder="Minimal 6 karakter">
+                <div class="pwd-hint" id="pwdHint"></div>
+              </div>
+              <div class="col-12">
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" id="uActive" checked>
+                  <label class="form-check-label" for="uActive">Akun aktif</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Batal</button>
+            <button type="submit" class="btn btn-primary" id="btnSaveUser"><i class="fas fa-floppy-disk me-1"></i> Simpan</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast-container" id="toastBox"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/admin-lte@4.0.0/dist/js/adminlte.min.js"></script>
+  <script>
+    let roles = [];
+    let currentList = [];
+    const $ = (sel) => document.querySelector(sel);
+
+    // ---------- Toast ----------
+    function toast(message, type = 'success') {
+      const colors = { success: 'text-bg-success', error: 'text-bg-danger', info: 'text-bg-primary' };
+      const el = document.createElement('div');
+      el.className = `toast align-items-center border-0 ${colors[type]} show`;
+      el.innerHTML = `<div class="d-flex"><div class="toast-body"><i class="fas ${type === 'success' ? 'fa-circle-check' : type === 'error' ? 'fa-circle-exclamation' : 'fa-circle-info'} me-2"></i>${message}</div><button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button></div>`;
+      $('#toastBox').appendChild(el);
+      setTimeout(() => { el.remove(); }, 4000);
+    }
+
+    // ---------- Role badge ----------
+    function roleBadge(level) {
+      const map = { 4: ['dark', 'Super Admin'], 3: ['danger', 'Admin'], 2: ['warning', 'Manager'], 1: ['info', 'User'] };
+      const [bg, name] = map[Number(level)] ?? ['secondary', 'User'];
+      return `<span class="badge role-badge text-bg-${bg}">${name} (Lv.${level})</span>`;
+    }
+
+    // ---------- ESC ----------
+    function esc(s) {
+      return String(s ?? '').replace(/[&<>"']/g,, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+
+    // ---------- Load roles ----------
+    async function loadRoles() {
+      const r = await fetch('/api/users/roles');
+      const j = await r.json();
+      roles = j.data ?? [];
+      $('#fRole').innerHTML += roles.map((x) => `<option value="${x.id}">${x.name} (Lv.${x.level})</option>`).join('');
+      $('#uRole').innerHTML = roles.map((x) => `<option value="${x.id}">${x.name} (Lv.${x.level})</option>`).join('');
+      $('#statRoles').textContent = roles.length;
+    }
+
+    // ---------- Render table ----------
+    function renderUsers(list) {
+      const tbody = $('#userTableBody');
+      if (!list.length) {
+        tbody.innerHTML = `<tr><td colspan="6" class="empty-state"><i class="fas fa-inbox"></i><p class="mt-2 mb-0">Tidak ada user ditemukan</p></td></tr>`;
+        return;
+      }
+      tbody.innerHTML = list.map((u) => `
+        <tr>
+          <td>
+            <div class="d-flex align-items-center gap-2">
+              <img src="https://cdn.jsdelivr.net/npm/admin-lte@4.0.0/dist/img/user2-160x160.jpg" class="avatar-sm" alt="">
+              <div><div class="fw-bold">${esc(u.full_name)}</div><small class="text-muted">@${esc(u.username)}</small></div>
+            </div>
+          </td>
+          <td>${roleBadge(u.role_level)}</td>
+          <td><small>${esc(u.email ?? '-')}</small></td>
+          <td>${u.is_active ? '<span class="badge role-badge text-bg-success">Aktif</span>' : '<span class="badge role-badge text-bg-secondary">Nonaktif</span>'}</td>
+          <td><small class="text-muted">${u.last_login_at ?? '-'}</small></td>
+          <td class="text-end text-nowrap">
+            <button class="btn btn-sm btn-outline-primary btn-icon" title="Edit" onclick="editUser(${u.id})"><i class="fas fa-pen"></i></button>
+            <button class="btn btn-sm btn-outline-${u.is_active ? 'secondary' : 'success'} btn-icon" title="${u.is_active ? 'Nonaktifkan' : 'Aktifkan'}" onclick="toggleUser(${u.id}, ${u.is_active})"><i class="fas ${u.is_active ? 'fa-ban' : 'fa-play'}"></i></button>
+            <button class="btn btn-sm btn-outline-danger btn-icon" title="Nonaktifkan (soft delete)" onclick="deleteUser(${u.id})"><i class="fas fa-trash-can"></i></button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // ---------- Load users ----------
+    async function loadUsers() {
+      const q = $('#fSearch').value.trim();
+      const role = $('#fRole').value;
+      const status = $('#fStatus').value;
+      const p = new URLSearchParams();
+      if (q) p.set('q', q);
+      if (role) p.set('role', role);
+      if (status !== '') p.set('status', status);
+      const r = await fetch(`/api/users?${p}`);
+      const j = await r.json();
+      if (j.success) {
+        const list = j.data ?? [];
+        currentList = list;
+        renderUsers(list);
+        $('#statTotal').textContent = j.total ?? list.length;
+        $('#statActive').textContent = list.filter((u) => u.is_active).length;
+        $('#statInactive').textContent = list.filter((u) => !u.is_active).length;
+        $('#footerInfo').textContent = `${j.total} user dan ${roles.length} role`;
+      } else {
+        toast(j.error ?? 'Gagal memuat user', 'error');
+      }
+    }
+
+    // ---------- Modal actions ----------
+    function openAdd() {
+      $('#userModalTitle').innerHTML = '<i class="fas fa-user-plus me-2 text-primary"></i> Tambah User';
+      $('#userForm').reset();
+      $('#uId').value = '';
+      $('#pwdHint').textContent = 'Wajib diisi saat membuat user baru（minimal 6 karakter）';
+      new bootstrap.Modal($('#userModal')).show();
+    }
+
+    function editUser(id) {
+      const u = currentList.find((x) => x.id == id);
+      if (!u) return;
+      $('#userModalTitle').innerHTML = '<i class="fas fa-user-pen me-2 text-primary"></i> Edit User';
+      $('#uId').value = u.id;
+      $('#uUsername').value = u.username;
+      $('#uUsername').disabled = true;
+      $('#uFullName').value = u.full_name;
+      $('#uEmail').value = u.email ?? '';
+      $('#uRole').value = u.role_id;
+      $('#uActive').checked = Boolean(u.is_active);
+      $('#pwdHint').textContent = 'Kosongkan bila tidak mengganti password';
+      new bootstrap.Modal($('#userModal')).show();
+    }
+
+    function onModalHidden() { $('#uUsername').disabled = false; }
+
+    // ---------- Toggle & delete ----------
+    async function toggleUser(id, current) {
+      const r = await fetch(`/api/users/${id}/toggle`, { method: 'PATCH' });
+      const j = await r.json();
+      toast(j.message ?? 'Status berubah', r.ok ? 'success' : 'error');
+      if (r.ok) loadUsers();
+    }
+
+    async function deleteUser(id) {
+      if (!confirm('Nonaktifkan user ini?')) return;
+      const r = await fetch(`/api/users/${id}`, { method: 'DELETE' });
+      const j = await r.json();
+      toast(j.message ?? '', r.ok ? 'success' : 'error');
+      if (r.ok) loadUsers();
+    }
+
+    // ---------- Save ----------
+    $('#userForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const id = $('#uId').value;
+      const isEdit = Boolean(id);
+      const body = {
+        full_name: $('#uFullName').value.trim(),
+        email: $('#uEmail').value.trim() || null,
+        role_id: Number($('#uRole').value),
+        is_active: $('#uActive').checked ? 1 : 0,
+      };
+      if (!isEdit) {
+        body.username = $('#uUsername').value.trim();
+        body.password = $('#uPassword').value;
+      } else if ($('#uPassword').value) {
+        body.password = $('#uPassword').value;
+      }
+      const r = await fetch(isEdit ? `/api/users/${id}` : '/api/users', {
+        method: isEdit ? 'PATCH' : 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+      const j = await r.json();
+      if (r.ok) {
+        toast(j.message ?? 'User disimpan', 'success');
+        bootstrap.Modal.getInstance($('#userModal')).hide();
+        loadUsers();
+      } else {
+        toast(j.error ?? 'Gagal menyimpan', 'error');
+      }
+    });
+
+    // ---------- Filters & init ----------
+    $('#fSearch').addEventListener('input', debounce(loadUsers, 300));
+    $('#fRole').addEventListener('change', loadUsers);
+    $('#fStatus').addEventListener('change', loadUsers);
+    $('#btnAddUser').addEventListener('click', openAdd);
+    $('#userModal').addEventListener('hidden.bs.modal', onModalHidden);
+
+    function debounce(fn, ms) {
+      let t;
+      return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
+    }
+
+    (async function init() {
+      await loadRoles();
+      await loadUsers();
+    })();
+  </script>
+</body>
+</html>

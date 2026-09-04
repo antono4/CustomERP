@@ -5,6 +5,7 @@ import sessionConfig from './config/session.js';
 import authRoutes from './routes/auth.routes.js';
 import dashboardRoutes from './routes/dashboard.routes.js';
 import mmApiRoutes from './routes/api/mm.routes.js';
+import usersApiRoutes from './routes/api/users.routes.js';
 
 const app = express();
 const PORT = Number(process.env.PORT ?? 3000);
@@ -21,6 +22,7 @@ app.use(express.static('public'));
 app.use(authRoutes);                     // /login, /logout, /api/auth/me
 app.use(dashboardRoutes);                 // /, /modules/:code, /admin/users
 app.use('/api/mm', mmApiRoutes);          // Goods Receipt MM -> WM + FI
+app.use('/api/users', usersApiRoutes);        // Manajemen user (CRUD + role) admin only
 
 // 404 + error handler
 app.use((req, res) => {

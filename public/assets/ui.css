@@ -1,0 +1,106 @@
+/* =====================================================================
+  Nexus ERP — UI polish layer (AdminLTE 4 + profesional styling)
+  ===================================================================== */
+:root {
+ --nexus-primary: #2563eb;
+ --nexus-secondary:#0ea5e9;
+ --nexus-ink:#0f172a;
+ --nexus-muted:#64748b;
+ --nexus-soft:#f1f5ff;
+ --nexus-line:#e2e8f0;
+}
+
+body {
+ font-family: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+ background:#f4f6fb;
+}
+
+/* ---------- Sidebar ---------- */
+.app-sidebar {
+ background: linear-gradient(180deg, #0b1220 0%, #0f172a 100%);
+}
+.app-sidebar .sidebar-menu .nav-link {
+ border-radius: .65rem;
+ margin: .1rem .65rem;
+ transition: background .15s ease;
+}
+.app-sidebar .sidebar-menu .nav-link:hover {
+ background: rgba(255,255,255,.07);
+}
+.app-sidebar .sidebar-menu .nav-link.active {
+ background: linear-gradient(90deg, rgba(37,99,235,.35), rgba(14,165,233,.12));
+ border-left: 3px solid var(--nexus-secondary);
+}
+.brand-link {
+ border-bottom: 1px solid rgba(255,255,255,.06);
+}
+
+/* ---------- Header ---------- */
+.app-header {
+ border-bottom: 1px solid var(--nexus-line);
+ box-shadow: ͵0 2px 8px rgba(15,23,42,.04);
+}
+.user-chip {
+ display:flex;
+ align-items:center;
+ gap: .7rem;
+ background:var(--nexus-soft);
+ border:1px solid #e0e8ff;
+ border-radius:2rem;
+ padding: .28rem .7rem .28rem .3rem;
+}
+.user-chip .avatar {
+ width:2.2rem;
+ height:2.2rem;
+}
+.user-chip .chip-name { font-size:.85rem; font-weight:700; color:var(--nexus-ink); line-height:1.1; }
+.user-chip .chip-role { font-size:.7rem; color:var(--nexus-muted); }
+
+/* ---------- Stat cards ---------- */
+.small-box { border-radius:1rem; box-shadow:0 6px 18px rgba(15,23,42,.06); }
+.small-box .inner h3 { font-weight:800; }
+.stat-gradient-blue { background:linear-gradient(135deg,#2563eb,#0ea5e9);
+}
+.stat-gradient-green { background:linear-gradient(135deg,#059669,#10b981);
+}
+.stat-gradient-amber { background:linear-gradient(135deg,#d97706,#f59e0b);
+}
+.stat-gradient-rose { background:linear-gradient(135deg,#dc2626,#f43f5e);
+}
+
+/* ---------- Module tiles ---------- */
+.module-tile { position:relative; overflow:hidden; border:1px solid var(--nexus-line); border-radius:1rem; background:#fff; transition:transform .18s ease, box-shadow .18s ease; }
+.module-tile:hover { transform:translateY(-4px); box-shadow:0 14px 30px rgba(15,23,42,.10%); border-color:#c7d8fe; }
+.module-tile .tile-icon { width:2.8rem; height:2.8rem; border-radius:.9rem; display:grid; place-items:center; font-size:1.15rem; color:#fff; background:linear-gradient(135deg,var(--nexus-primary),var(--nexus-secondary)); box-shadow:0 8px 16px rgba(37,99,235,.25%; }
+.module-tile .tile-code { font-size:.68rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--nexus-muted); }
+.module-tile .tile-name { font-weight:700; color:var(--nexus-ink); font-size:.95rem; margin:.15rem 0 0; }
+.module-tile .tile-badge { position:absolute; top:1rem; right:1rem; }
+
+/* ---------- Cards umum ---------- */
+.card { border:1px solid var(--nexus-line); border-radius:1rem; box-shadow:0 4px 14px rgba(15,23,42,.04%); }
+.card .card-header { background:#fff; border-bottom:1px solid var(--nexus-line); border-radius:1rem 1rem 0 0; padding:1rem 1.25rem; }
+.card .card-header .card-title { font-weight:800; color:var(--nexus-ink); font-size:1rem; }
+.content-wrapper { background:#f4f6fb; }
+
+/* ---------- Tabel ---------- */
+.table thead th {
+ font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; color:var(--nexus-muted); border-bottom-width:1px; white-space:nowrap;
+}
+.table tbody td { vertical-align:middle; }
+.table tbody tr:hover { background:#f8faff; }
+
+/* ---------- Badge role ---------- */
+.badge-role { font-weight:700; font-size:.72rem; padding:.42em .75em; border-radius:.6em; }
+.text-bg-dark { background:#0f172a !important; }
+
+/* ---------- Footer ---------- */
+.app-footer { border-top:1px solid var(--nexus-line); color:var(--nexus-muted); }
+
+/* ---------- Callout modul ---------- */
+.callout-info { border-radius:1rem; border-left-color:var(--nexus-primary); background:#f1f5ff; }
+
+/* ---------- Responsif kecil ---------- */
+@media (max-width:768px) {
+ .user-chip .chip-meta { display:none; }
+ .module-tile .tile-badge { top:.5rem; right:.5rem; }
+}

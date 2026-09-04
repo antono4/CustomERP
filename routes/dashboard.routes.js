@@ -21,17 +21,11 @@ router.get('/modules/:code', requireAuth, async (req, res) => {
   res.send(renderModulePage(req.session.user, mod, modules));
 });
 
-/** GET /admin/users — manajemen user (admin+\) */
-router.get('/admin/users', requireAuth, requireAdmin, async (req, res) => {
-  const users = await query(
-    `SELECT u.id, u.username, u.full_name, u.email, u.is_active, u.last_login_at,
-            r.name AS role_name, r.level AS role_level
-       FROM users u JOIN roles r ON r.id = u.role_id
-      ORDER BY u.created_at DESC`,
-  );
-  const roles = await query(`SELECT id, code, name, level FROM roles ORDER BY level DESC`);
-  res.send(renderUserAdmin(req.session.user, users, roles));
+/** GET /admin/users — manajemen user (admin) — halaman interaktif (fetch /api/users) */
+router.get('/admin/users', requireAuth, requireAdmin, (_req, res) => {
+  res.sendFile('admin/users.html', { root: 'public' });
 });
+
 
 export default router;
 
@@ -102,14 +96,20 @@ function renderShell(user, modules) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Dashboard — Nexus ERP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@4.0.0/dist/css/adminlte.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.4.6/styles/overlayscrollbars.min.css">
+  <link rel="stylesheet" href="/assets/ui.css">
   <style>
     .user-card { display:flex; align-items:center; gap:.75rem; }
     .user-card img { width:2.4rem; height:2.4rem; border-radius:50%; }
     .brand-link { text-decoration:none; }
     .content-wrapper { background:#f4f6f9; }
+    .module-card { border-radius:1rem; transition:transform .18s ease, box-shadow .18s ease; }
+    .module-card:hover { transform:translateY(-4px); box-shadow:0 14px 30px rgba(15,23,42,.10%); }
     .small-box { border-radius:.8rem; overflow:hidden; }
   </style>
 </head>
@@ -142,11 +142,11 @@ function renderShell(user, modules) {
       </ul>
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
-          <div class="user-card py-1 px-2">
-            <img src="https://cdn.jsdelivr.net/npm/admin-lte@4.0.0/dist/img/user2-160x160.jpg" alt="User">
-            <div>
-              <div style="font-weight:600;font-size:.9rem">${user.fullName}</div>
-              <span class="badge text-bg-${roleBadge(user)}">${user.roleName}</span>
+          <div class="user-chip py-0">
+            <img src="https://cdn.jsdelivr.net/npm/admin-lte@4.0.0/dist/img/user2-160x160.jpg" alt="User" class="avatar rounded-circle">
+            <div class="chip-meta">
+              <div class="chip-name">${user.fullName}</div>
+              <span class="badge text-bg-${roleBadge(user)} badge-role">${user.roleName}</span>
             </div>
           </div>
         </li>
@@ -203,18 +203,26 @@ function renderShell(user, modules) {
           </div>
 
           <!-- Module grid -->
-          <div class="card mt-3">
-            <div class="card-header"><h3 class="card-title">Modul yang dapat diakses</h3></div>
+          <div class="card mt-3 border-0 shadow-sm">
+            <div class="card-header"><h3 class="card-title"><i class="fas fa-th-large me-2 text-primary"></i> Modul yang dapat diakses</h3>
+              <div class="card-tools"><span class="badge text-bg-primary badge-role">${modules.filter((m) => m.can_view).length} modul aktif</span></div>
+            </div>
             <div class="card-body">
-              <div class="row">
+              <div class="row g-3">
                 ${modules.filter((m) => m.can_view).map((m) => `
-                  <div class="col-md-6 col-lg-3 mb-3">
-                    <a href="/modules/${m.module_code}" class="text-decoration-none text-dark">
-                      <div class="card h-100 shadow-sm border-0 module-card">
-                        <div class="card-body text-center p-4">
-                          <i class="fas ${moduleIcon(m)} fa-2x text-primary mb-2"></i>
-                          <h6 class="card-title fw-bold">${m.module_name}</h6>
-                          <p class="text-secondary small mb-0">${m.sort_order}. ${m.can_view ? 'Aktif' : 'Terkunci'}</p>
+                  <div class="col-md-6 col-lg-3">
+                    <a href="/modules/${m.module_code}" class="text-decoration-none">
+                      <div class="module-tile p-3 h-100">
+                        <span class="tile-badge"><span class="badge text-bg-light border badge-role">${m.module_code}</span></span>
+                        <div class="d-flex align-items-center gap-3">
+                          <div class="tile-icon"><i class="fas ${moduleIcon(m)}"></i></div>
+                          <div>
+                            <p class="tile-code mb-0">Modul ${String(m.sort_order).padStart(2, '0')}</p>
+                            <h6 class="tile-name">${m.module_name}</h6>
+                          </div>
+                        </div>
+                        <div class="mt-3 small text-secondary d-flex align-items-center gap-1">
+                          <i class="fas fa-circle-check text-success"></i> ${m.can_view ? 'Aktif' : 'Terkunci'}
                         </div>
                       </div>
                     </a>
