@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="id" data-bs-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nexus ERP — Preview Dashboard (Admin)</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@4.0.0/dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.4.6/styles/overlayscrollbars.min.css">
+  <style>
+    body { font-family: 'Source Sans 3', sans-serif; }
+    .content-wrapper { background:#f4f6f9; }
+    .brand-link { text-decoration: none; }
+    .small-box { border-radius: .8rem; overflow:hidden; }
+    .module-card:hover { transform: translateY(-3px); box-shadow:0 8px 20px rgba(0,0,0,.12%); transition: .2s; }
+    .user-avatar { width: 2.4rem; height: 2.4rem; border-radius: 50%; }
+  </style>
+</head>
+<body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+  <div class="app-wrapper">
+
+    <!-- ====== Sidebar ====== -->
+    <aside class="app-sidebar bg-dark" data-bs-theme="dark">
+      <a href="#" class="brand-link">
+        <img src="https://cdn.jsdelivr.net/npm/admin-lte@4.0.0/dist/img/AdminLTELogo.png" alt="Nexus ERP" class="brand-image opacity-75 shadow">
+        <span class="brand-text fw-light">Nexus <b>ERP</b></span>
+      </a>
+      <div class="sidebar-wrapper">
+        <nav class="mt-2">
+          <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
+            <li class="nav-item">
+              <a href="#" class="nav-link active">
+                <i class="nav-icon fas fa-gauge-high"></i>
+                <p>Dashboard</p>
+              </a>
+            </li>
+            <li class="nav-header">MODUL ERP</li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon fas fa-scale-balanced"></i><p>Finance &amp; Controlling (FI/CO)</p></a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon fas fa-cart-shopping"></i><p>Sales &amp; Distribution (SD)</p></a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon fas fa-boxes-stacked"></i><p>Material Management (MM)</p></a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon fas fa-industry"></i><p>Production Planning (PP)</p></a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon fas fa-warehouse"></i><p>Warehouse Mgmt (WM/EWM)</p></a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon fas fa-users"></i><p>Human Capital (HCM/HR)</p></a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon fas fa-truck-fast"></i><p>Supply Chain (SCM/APO)</p></a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon fas fa-diagram-project"></i><p>Project System (PS)</p></a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon fas fa-handshake"></i><p>Customer Relation (CRM)</p></a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon fas fa-screwdriver-wrench"></i><p>Plant Maintenance (PM)</p></a></li>
+            <li class="nav-header">ADMINISTRASI</li>
+            <li class="nav-item"><a href="#" class="nav-link active"><i class="nav-icon fas fa-user-shield"></i><p>Manajemen User &amp; Level</p></a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon fas fa-puzzle-piece"></i><p>Hak Akses Modul</p></a></li>
+            <li class="nav-header">SESI</li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon fas fa-arrow-right-from-bracket"></i><p>Keluar</p></a></li>
+          </ul>
+        </nav>
+      </div>
+    </aside>
+
+    <!-- ====== Header ====== -->
+    <header class="app-header navbar navbar-expand bg-body">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" data-lte-toggle="sidebar" href="#" role="button"><i class="fas fa-bars"></i></a></li>
+        <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Dashboard</a></li>
+      </ul>
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <div class="user-card py-1 px-2 d-flex align-items-center gap-2">
+            <img src="https://cdn.jsdelivr.net/npm/admin-lte@4.0.0/dist/img/user2-160x160.jpg" class="user-avatar">
+            <div>
+              <div style="font-weight:600;font-size:.9rem">Administrator ERP</div>
+              <span class="badge text-bg-danger">Admin (Lv.3)</span>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </header>
+
+    <!-- ====== Content ====== -->
+    <main class="app-main">
+      <div class="app-content-header">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm-6"><h3 class="mb-0">Dashboard</h3></div>
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-end">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item active">Dashboard</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="app-content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-lg-3 col-6">
+              <div class="small-box text-bg-primary">
+                <div class="inner"><h3>10</h3><p>Modul ERP Aktif</p></div>
+                <div class="icon"><i class="fas fa-cubes"></i></div>
+                <a href="#" class="small-box-footer">Blueprint SAP <i class="fas fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
+            <div class="col-lg-3 col-6">
+              <div class="small-box text-bg-success">
+                <div class="inner"><h3>4</h3><p>User Level</p></div>
+                <div class="icon"><i class="fas fa-user-shield"></i></div>
+                <a href="#" class="small-box-footer">user s/d superadmin <i class="fas fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
+            <div class="col-lg-3 col-6">
+              <div class="small-box text-bg-warning">
+                <div class="inner"><h3>3</h3><p>Level Akses Anda</p></div>
+                <div class="icon"><i class="fas fa-layer-group"></i></div>
+                <a href="#" class="small-box-footer">Admin <i class="fas fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
+            <div class="col-lg-3 col-6">
+              <div class="small-box text-bg-danger">
+                <div class="inner"><h3>2026</h3><p>Tahun Buku</p></div>
+                <div class="icon"><i class="fas fa-calendar-days"></i></div>
+                <a href="#" class="small-box-footer">Periode saat ini <i class="fas fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-4">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header"><h3 class="card-title">Manajemen User &amp; Level</h3>
+                  <div class="card-tools"><button class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Tambah User</button></div>
+                </div>
+                <div class="card-body table-responsive p-0">
+                  <table class="table table-hover table-striped align-middle mb-0">
+                    <thead>
+                      <tr><th>ID</th><th>Username</th><th>Nama Lengkap</th><th>Email</th><th>Role / Level</th><th>Status</th><th>Login Terakhir</th><th>Aksi</th></tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>#1</td><td><b>superadmin</b></td><td>Super Administrator</td><td>sa@nexus.local</td><td><span class="badge text-bg-dark">Super Admin (Lv.4)</span></td><td><span class="badge text-bg-success">Aktif</span></td><td>04/09/2026, 14:32</td><td><button class="btn btn-sm btn-outline-primary"><i class="fas fa-edit"></i></button> <button class="btn btn-sm btn-outline-danger"><i class="fas fa-ban"></i></button></td></tr>
+                      <tr><td>#2</td><td><b>admin</b></td><td>Administrator ERP</td><td>admin@nexus.local</td><td><span class="badge text-bg-danger">Admin (Lv.3)</span></td><td><span class="badge text-bg-success">Aktif</span></td><td>04/09/2026, 14:30</td><td><button class="btn btn-sm btn-outline-primary"><i class="fas fa-edit"></i></button> <button class="btn btn-sm btn-outline-danger"><i class="fas fa-ban"></i></button></td></tr>
+                      <tr><td>#3</td><td><b>manager</b></td><td>Operations Manager</td><td>manager@nexus.local</td><td><span class="badge text-bg-warning">Manager (Lv.2)</span></td><td><span class="badge text-bg-success">Aktif</span></td><td>04/09/2026, 14:10</td><td><button class="btn btn-sm btn-outline-primary"><i class="fas fa-edit"></i></button> <button class="btn btn-sm btn-outline-danger"><i class="fas fa-ban"></i></button></td></tr>
+                      <tr><td>#4</td><td><b>user</b></td><td>Staff Operasional</td><td>user@nexus.local</td><td><span class="badge text-bg-info">User (Lv.1)</span></td><td><span class="badge text-bg-secondary">Nonaktif</span></td><td>03/09/2026,, 16:05</td><td><button class="btn btn-sm btn-outline-primary"><i class="fas fa-edit"></i></button> <button class="btn btn-sm btn-outline-danger"><i class="fas fa-ban"></i></button></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-md-4">
+              <div class="card">
+                <div class="card-header"><h3 class="card-title">Role &amp; Level</h3></div>
+                <div class="card-body p-0">
+                  <table class="table table-sm mb-0">
+                    <thead><tr><th>Level</th><th>Role</th><th>Deskripsi</th></tr></thead>
+                    <tbody>
+                      <tr><td><span class="badge text-bg-info">1</span></td><td>User</td><td class="small text-secondary">Operasional entry</td></tr>
+                      <tr><td><span class="badge text-bg-warning">2</span></td><td>Manager</td><td class="small text-secondary">Operasional full</td></tr>
+                      <tr><td><span class="badge text-bg-danger">3</span></td><td>Admin</td><td class="small text-secondary">Full + user mgmt</td></tr>
+                      <tr><td><span class="badge text-bg-dark">4</span></td><td>Super Admin</td><td class="small text-secondary">Full sistem</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </main>
+
+    <footer class="app-footer">
+      <div class="float-end d-none d-sm-inline">AdminLTE 4</div>
+      <strong>Nexus ERP &copy; 2024-2026.</strong> Hak cipta dilindungi.
+    </footer>
+  </div>
+
+  <!-- Preview statik: buka file ini langsung di browser untuk screenshot. -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.4.6/browser/overlayscrollbars.browser.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/admin-lte@4.0.0/dist/js/adminlte.min.js"></script>
+</body>
+</html>
